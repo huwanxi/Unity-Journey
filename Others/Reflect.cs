@@ -83,3 +83,41 @@ class Program
         newDisplayMethod.Invoke(newPerson, null);
     }
 }
+
+// 反射获取的区别
+
+class ReflectionDemo
+{
+    static void Main()
+    {
+        Type type = typeof(Program);
+
+        Console.WriteLine("=== PropertyInfo ===");
+        PropertyInfo[] properties = type.GetProperties(
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+        );
+        foreach (var prop in properties)
+        {
+            Console.WriteLine($"属性: {prop.Name}");
+            Console.WriteLine($"  类型: {prop.PropertyType.Name}");
+            Console.WriteLine($"  可读: {prop.CanRead}");
+            Console.WriteLine($"  可写: {prop.CanWrite}");
+            Console.WriteLine($"  声明类型: {prop.DeclaringType.Name}");
+            Console.WriteLine();
+        }
+
+        Console.WriteLine("=== FieldInfo ===");
+        FieldInfo[] fields = type.GetFields(
+            BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance
+        );
+        foreach (var field in fields)
+        {
+            Console.WriteLine($"字段: {field.Name}");
+            Console.WriteLine($"  类型: {field.FieldType.Name}");
+            Console.WriteLine($"  访问级别: {field.Attributes}");
+            Console.WriteLine($"  声明类型: {field.DeclaringType.Name}");
+            Console.WriteLine($"  是否只读: {field.IsInitOnly}");
+            Console.WriteLine();
+        }
+    }
+}
