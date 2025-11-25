@@ -11,6 +11,7 @@ public interface IEventBus
     void Unsubscribe<TEvent>(Action<TEvent> handler);
 }
 
+
 // 插件管理器接口
 public interface IPluginManager
 {
